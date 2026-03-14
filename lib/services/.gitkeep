@@ -1,0 +1,2 @@
+/// Servicios (API, WebSocket, auth, etc.) para Flow-chat.
+library;

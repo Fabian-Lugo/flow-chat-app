@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 
 class CheckboxStyle extends StatefulWidget {
   final String text;
+  final bool terms;
 
   const CheckboxStyle({
-    required this.text,
+    this.text = '',
+    this.terms = false, 
     super.key
   });
 
@@ -37,7 +39,30 @@ class _CheckboxStyleState extends State<CheckboxStyle> {
           ),
         ),
         const SizedBox(width: 8),
-        Text(widget.text, style: AppTextStyle.checkboxText),
+        widget.terms 
+        ? Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Acepta los ',
+                  style: AppTextStyle.checkboxText,
+                ),
+                TextSpan(
+                  text: 'Terminos ',
+                  style: AppTextStyle.linkText,
+                ),
+                TextSpan(
+                  text: 'y ',
+                  style: AppTextStyle.checkboxText,
+                ),
+                TextSpan(
+                  text: 'Condiciones',
+                  style: AppTextStyle.linkText,
+                ),
+              ],
+            ),
+          )
+        : Text(widget.text, style: AppTextStyle.checkboxText),
       ],
     );
   }

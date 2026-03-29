@@ -9,15 +9,16 @@ import 'package:flow_chat/utils/input_style.dart';
 import 'package:flow_chat/utils/input_style_password.dart';
 import 'package:flow_chat/widgets/button_styles.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _controllerText = TextEditingController();
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _controllerTextName = TextEditingController();
+  final TextEditingController _controllerTextEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
   final _key = GlobalKey<FormState>();
 
@@ -29,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    _controllerText.dispose();
+    _controllerTextName.dispose();
+    _controllerTextEmail.dispose();
     _controllerPassword.dispose();
     super.dispose();
   }
@@ -55,13 +57,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         LogoImage(),
                         Text(
-                          'Inicia sesión',
+                          'Crear cuenta',
                           style: AppTextStyle.loginTitle,
                         ),
                         const SizedBox(height: 30),
                         InputStyle(
+                          text: 'Nombre',
+                          controller: _controllerTextName,
+                          type: TextInputType.text,
+                          useIcon: CupertinoIcons.profile_circled,
+                        ),
+                        const SizedBox(height: 20),
+                        InputStyle(
                           text: 'Correo',
-                          controller: _controllerText,
+                          controller: _controllerTextEmail,
                           type: TextInputType.emailAddress,
                           useIcon: CupertinoIcons.mail,
                         ),
@@ -71,16 +80,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _controllerPassword,
                         ),
                         const SizedBox(height: 15),
-                        _loginOptions(),
-                        SizedBox(height: size.height * 0.2),
-                        ButtonStyles(text: 'Iniciar sesión', onTap: goNext),
+                        _registerCheckBox(),
+                        SizedBox(height: size.height * 0.15),
+                        ButtonStyles(text: 'Crear cuenta', onTap: goNext),
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('No tienes cuenta?'),
+                            Text('Ya eres miembro?'),
                             const SizedBox(width: 3),
-                            TextLink(text: 'Unete ahora', onTap: () => Navigator.pushNamed(context, AppRoutes.register))
+                            TextLink(text: 'Inicia sesión', onTap: () => Navigator.pop(context))
                           ],
                         )
                       ],
@@ -95,12 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _loginOptions() {
+  Widget _registerCheckBox() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CheckboxStyle(text: 'Recordarme'),
-        TextLink(text: 'Cambiar contraseña', onTap: () => print('Usuario: cambiar contraseña'))
+        CheckboxStyle(text: 'Acepto los Terminos y Condiciones', terms: true,),
       ],
     );
   }

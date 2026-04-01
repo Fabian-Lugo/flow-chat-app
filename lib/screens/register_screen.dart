@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
 import 'package:flow_chat/theme/app_routes.dart';
-import 'package:flow_chat/utils/input_style.dart';
-import 'package:flow_chat/utils/input_style_password.dart';
+import 'package:flow_chat/widgets/input_style.dart';
+import 'package:flow_chat/widgets/input_style_password.dart';
 import 'package:flow_chat/widgets/button_styles.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void goNext() {
     if (_key.currentState!.validate()) {
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.welcome, (_) => false);
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.inbox, (_) => false);
     }
   }
 
@@ -87,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Ya eres miembro?'),
+                            Text('Ya eres miembro?', style: AppTextStyle.checkboxText),
                             const SizedBox(width: 3),
                             TextLink(text: 'Inicia sesión', onTap: () => Navigator.pop(context))
                           ],

@@ -1,4 +1,0 @@
-/// Capa de modelos de dominio para Flow-chat.
-///
-/// Aquí se definen entidades como User, Message, Chat, etc.
-library;

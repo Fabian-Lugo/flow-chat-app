@@ -1,5 +1,5 @@
 import 'package:flow_chat/theme/app_colors.dart';
-import 'package:flow_chat/widgets/input_styles_border.dart';
+import 'package:flow_chat/utils/input_styles_border.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

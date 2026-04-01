@@ -38,6 +38,11 @@ class AppTextStyle {
     color: AppColors.text,
   );
 
+  static TextStyle nameUser = GoogleFonts.inter(
+    fontWeight: FontWeight.w600,
+    color: AppColors.text,
+  );
+
   static TextStyle checkboxText = GoogleFonts.inter(
     fontSize: 13,
     fontWeight: FontWeight.w400,
@@ -61,5 +66,43 @@ class AppTextStyle {
     fontSize: 15,
     color: AppColors.primaryLight,
     fontWeight: FontWeight.w500,
+  );
+
+  // Inbox Screen
+  static TextStyle inboxAppBarTitle = GoogleFonts.inter(
+    fontSize: 25,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primaryLight,
+  );
+
+  static TextStyle inboxSectionTitle = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: AppColors.text,
+  );
+
+  static TextStyle avatarInitials = GoogleFonts.inter(
+    fontSize: 25,
+    fontWeight: FontWeight.w600,
+    color: AppColors.surfaceLight,
+  );
+
+  // Connection Styles
+  static TextStyle connectionStatus = GoogleFonts.inter(
+    fontSize: 10,
+    color: AppColors.surfaceLight,
+  );
+
+  static TextStyle friendsConnected = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.text,
+  );
+
+  // Chat Screen
+  static TextStyle chatAppBarName = GoogleFonts.inter(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: AppColors.text,
   );
 }

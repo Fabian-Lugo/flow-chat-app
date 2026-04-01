@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
 import 'package:flow_chat/theme/app_routes.dart';
-import 'package:flow_chat/utils/input_style.dart';
-import 'package:flow_chat/utils/input_style_password.dart';
+import 'package:flow_chat/widgets/input_style.dart';
+import 'package:flow_chat/widgets/input_style_password.dart';
 import 'package:flow_chat/widgets/button_styles.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void goNext() {
     if (_key.currentState!.validate()) {
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.welcome, (_) => false);
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.inbox, (_) => false);
     }
   }
 

@@ -1,0 +1,26 @@
+import 'package:flow_chat/theme/app_colors.dart';
+import 'package:flutter/material.dart';
+
+class OnlineStatusBadge extends StatelessWidget {
+  final bool isOnline;
+  final double size;
+
+  const OnlineStatusBadge({
+    super.key,
+    required this.isOnline,
+    this.size = 15,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: isOnline ? AppColors.chatActive : AppColors.chatOffline,
+        shape: BoxShape.circle,
+        border: Border.all(color: AppColors.surfaceLight, width: 2),
+      ),
+    );
+  }
+}

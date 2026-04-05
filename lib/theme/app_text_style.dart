@@ -3,82 +3,85 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyle {
-  // Welcome Screen
-  static TextStyle welcomeTitle = GoogleFonts.inter(
+  // --- Títulos y Encabezados ---
+  static TextStyle title = GoogleFonts.inter(
+    fontSize: 27,
+    fontWeight: FontWeight.w700,
+    color: AppColors.text,
+  );
+
+  static TextStyle subtitle = GoogleFonts.inter(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textLight,
+  );
+
+  static TextStyle heading = GoogleFonts.inter(
     fontSize: 23,
     fontWeight: FontWeight.w700,
     color: AppColors.text,
   );
 
-  static TextStyle welcomeSubtitle = GoogleFonts.inter(
-    fontSize: 18,
-    fontWeight: FontWeight.w300,
+  static TextStyle headingSmall = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
     color: AppColors.text,
   );
 
-  static TextStyle developerText = GoogleFonts.inter(
+  // --- Cuerpo y Etiquetas ---
+  static TextStyle body = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppColors.text,
+  );
+
+  static TextStyle bodySmall = GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w300,
     color: AppColors.text,
   );
 
-  static TextStyle githubName = GoogleFonts.inter(
+  static TextStyle label = GoogleFonts.inter(
     fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: AppColors.text,
+  );
+
+  static TextStyle labelBold = GoogleFonts.inter(
+    fontWeight: FontWeight.w600,
+    color: AppColors.text,
+  );
+
+  static TextStyle inputsTitle = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
     color: AppColors.surfaceDark,
   );
 
-  // Login Screen
-  static TextStyle loginTitle = GoogleFonts.inter(
-    fontSize: 30,
-    fontWeight: FontWeight.w600,
-    color: AppColors.text,
-  );
-
-  static TextStyle labelText = GoogleFonts.inter(
-    color: AppColors.text,
-  );
-
-  static TextStyle nameUser = GoogleFonts.inter(
-    fontWeight: FontWeight.w600,
-    color: AppColors.text,
-  );
-
-  static TextStyle checkboxText = GoogleFonts.inter(
-    fontSize: 13,
-    fontWeight: FontWeight.w400,
-    color: AppColors.text,
-  );
-
-  static TextStyle linkText = GoogleFonts.inter(
-    fontSize: 13,
-    fontWeight: FontWeight.w400,
+  // --- Enlaces y Botones ---
+  static TextStyle link = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
     color: AppColors.primary,
   );
 
-  // Buttons
-  static TextStyle buttonTextPrimary = GoogleFonts.inter(
+  static TextStyle buttonPrimary = GoogleFonts.inter(
     fontSize: 15,
     color: AppColors.surfaceLight,
     fontWeight: FontWeight.w500,
   );
 
-  static TextStyle buttonTextSecondary = GoogleFonts.inter(
+  static TextStyle buttonSecondary = GoogleFonts.inter(
     fontSize: 15,
-    color: AppColors.primaryLight,
+    color: AppColors.primary,
     fontWeight: FontWeight.w500,
   );
 
-  // Inbox Screen
-  static TextStyle inboxAppBarTitle = GoogleFonts.inter(
-    fontSize: 25,
-    fontWeight: FontWeight.w600,
-    color: AppColors.primaryLight,
-  );
-
-  static TextStyle inboxSectionTitle = GoogleFonts.inter(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    color: AppColors.text,
+  // --- Especializados ---
+  static TextStyle appBarTitle = GoogleFonts.inter(
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+    color: AppColors.surfaceLight,
   );
 
   static TextStyle avatarInitials = GoogleFonts.inter(
@@ -87,22 +90,31 @@ class AppTextStyle {
     color: AppColors.surfaceLight,
   );
 
-  // Connection Styles
-  static TextStyle connectionStatus = GoogleFonts.inter(
+  static TextStyle statusSmall = GoogleFonts.inter(
     fontSize: 10,
     color: AppColors.surfaceLight,
   );
 
-  static TextStyle friendsConnected = GoogleFonts.inter(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: AppColors.text,
-  );
-
-  // Chat Screen
-  static TextStyle chatAppBarName = GoogleFonts.inter(
+  // --- Chat ---
+  static TextStyle chatMessage = GoogleFonts.inter(
     fontSize: 18,
     fontWeight: FontWeight.w600,
-    color: AppColors.text,
+    color: AppColors.surfaceLight,
+  );
+
+  static TextStyle chatInputHint = GoogleFonts.inter(
+    color: AppColors.darkBorder,
+    fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle chatInputLabel = GoogleFonts.inter(
+    color: AppColors.darkCard,
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+  );
+
+  static TextStyle chatSendButton = GoogleFonts.inter(
+    color: AppColors.primary,
+    fontWeight: FontWeight.w600,
   );
 }

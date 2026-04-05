@@ -3,7 +3,8 @@ import 'package:flow_chat/theme/app_colors.dart';
 import 'package:flow_chat/theme/app_routes.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
 import 'package:flow_chat/widgets/connection_styles.dart';
-import 'package:flow_chat/widgets/online_status_badge.dart'; // Importamos el nuevo widget
+import 'package:flow_chat/widgets/gradient_text.dart';
+import 'package:flow_chat/widgets/online_status_badge.dart';
 import 'package:flow_chat/widgets/user_avatar_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,24 @@ class InboxScreen extends StatefulWidget {
 }
 
 class _InboxScreenState extends State<InboxScreen> {
-
-  final users = [
+  final List<User> users = [
     User(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
     User(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
     User(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
     User(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
+    User(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
+    User(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
+    User(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
+    User(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
+    User(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
+    User(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
+    User(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
+    User(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
+  ];
+
+  final List<Color> colors = [
+    AppColors.primaryDark.withOpacity(0.8),
+    AppColors.primaryLight,
   ];
 
   final RefreshController _refreshController = RefreshController(
@@ -33,9 +46,15 @@ class _InboxScreenState extends State<InboxScreen> {
     Navigator.pushNamed(context, AppRoutes.chat, arguments: user);
   }
 
-  void _loadUsers() async {
+  void _onRefreshUsers() async {
     await Future.delayed(Duration(milliseconds: 1000));
     _refreshController.refreshCompleted();
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,64 +62,114 @@ class _InboxScreenState extends State<InboxScreen> {
     final onlineUsers = users.where((u) => u.online).toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inbox', style: AppTextStyle.inboxAppBarTitle),
-        centerTitle: true,
+        title: _InboxAppBarContent(colors: colors),
+        toolbarHeight: 70,
         backgroundColor: AppColors.surfaceLight,
         elevation: 3,
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.person)),
-        ],
       ),
       body: SmartRefresher(
         controller: _refreshController,
         enablePullDown: true,
-        onRefresh: _loadUsers,
+        onRefresh: _onRefreshUsers,
         header: ClassicHeader(
           completeIcon: Icon(Icons.check, color: AppColors.accent),
         ),
-        child: _buildMainScrollContent(onlineUsers),
+        child: _MainScrollBody(
+          onlineUsers: onlineUsers,
+          users: users,
+          onTap: goChat,
+        ),
       ),
     );
   }
+}
 
-  ListView _buildMainScrollContent(List<User> onlineUsers) {
+class _InboxAppBarContent extends StatelessWidget {
+  final List<Color> colors;
+
+  const _InboxAppBarContent({required this.colors});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: GradientText(
+              text: 'Flow Chat',
+              style: AppTextStyle.appBarTitle,
+              colors: colors,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(CupertinoIcons.person, size: 30),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MainScrollBody extends StatelessWidget {
+  final List<User> users;
+  final List<User> onlineUsers;
+  final Function onTap;
+
+  const _MainScrollBody({
+    required this.users,
+    required this.onlineUsers,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
         ConnectionStyles(state: ConnectionStateStyle.connected),
         Align(
           alignment: AlignmentGeometry.center,
-          child: Text(
-            'Amigos conectados',
-            style: AppTextStyle.friendsConnected,
-          ),
+          child: Text('Amigos conectados', style: AppTextStyle.bodySmall),
         ),
-        _buildHorizontalActiveFriends(onlineUsers),
+        _ActiveFriendsSlider(onlineUsers: onlineUsers, onTap: onTap),
         Padding(
-          padding: EdgeInsets.only(left: 15, bottom: 10),
+          padding: const EdgeInsets.only(left: 15, bottom: 10),
           child: Align(
             alignment: AlignmentGeometry.centerStart,
-            child: Text(
-              'Bandeja de entrada',
-              style: AppTextStyle.inboxSectionTitle,
-            ),
+            child: Text('Bandeja de entrada', style: AppTextStyle.headingSmall),
           ),
         ),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: users.length,
-          itemBuilder: (_, i) => _buildChatTile(users[i]),
+          itemBuilder: (_, i) => _ChatUserTile(user: users[i], onTap: onTap),
           separatorBuilder: (_, i) => Divider(),
         ),
       ],
     );
   }
+}
 
-  ListTile _buildChatTile(User user) {
+class _ChatUserTile extends StatelessWidget {
+  final User user;
+  final Function onTap;
+
+  const _ChatUserTile({required this.user, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
-      title: Text(user.name, style: AppTextStyle.nameUser),
-      subtitle: Text(user.email),
+      title: Text(user.name, style: AppTextStyle.labelBold),
+      subtitle: Text(user.email, style: AppTextStyle.bodySmall),
       leading: UserAvatarStyle(
         user: user,
         radius: 25,
@@ -108,11 +177,19 @@ class _InboxScreenState extends State<InboxScreen> {
         useAccentGradient: true,
       ),
       trailing: OnlineStatusBadge(isOnline: user.online, size: 12),
-      onTap: () => goChat(user),
+      onTap: () => onTap(user),
     );
   }
+}
 
-  Widget _buildHorizontalActiveFriends(List<User> onlineUsers) {
+class _ActiveFriendsSlider extends StatelessWidget {
+  final List<User> onlineUsers;
+  final Function onTap;
+
+  const _ActiveFriendsSlider({required this.onlineUsers, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 115,
       width: double.infinity,
@@ -121,18 +198,27 @@ class _InboxScreenState extends State<InboxScreen> {
         itemCount: onlineUsers.length,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         itemBuilder: (_, i) {
+        final user = onlineUsers[i];
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             child: Column(
               children: [
-                UserAvatarStyle(user: onlineUsers[i], radius: 35, showBadge: true),
+                GestureDetector(
+                  onTap: () => onTap(user),
+                  behavior: HitTestBehavior.opaque,
+                  child: UserAvatarStyle(
+                    user: user,
+                    radius: 35,
+                    showBadge: true,
+                  ),
+                ),
                 const SizedBox(height: 5),
                 SizedBox(
                   width: 70,
                   child: Text(
-                    onlineUsers[i].name,
+                    user.name,
                     textAlign: TextAlign.center,
-                    style: AppTextStyle.nameUser,
+                    style: AppTextStyle.labelBold,
                   ),
                 ),
               ],

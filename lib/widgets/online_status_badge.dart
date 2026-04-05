@@ -17,7 +17,7 @@ class OnlineStatusBadge extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: isOnline ? AppColors.chatActive : AppColors.chatOffline,
+        color: isOnline ? AppColors.chatActive : AppColors.chatOfflineLight,
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.surfaceLight, width: 2),
       ),

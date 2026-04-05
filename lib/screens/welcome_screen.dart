@@ -29,12 +29,12 @@ class WelcomeScreen extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05 ),
             Text('¡Bienvenido a Flow Chat!',
-              style: AppTextStyle.welcomeTitle,
+                style: AppTextStyle.heading,
             ),
             const SizedBox(height: 15),
             Text('Nos complace presentar Flow chat\nsencillo, rápido y la forma más práctica\nde hablar.',
               textAlign: TextAlign.center,
-              style: AppTextStyle.welcomeSubtitle,
+                style: AppTextStyle.body,
             ),
             const SizedBox(height: 30),
             Row(
@@ -44,7 +44,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 Text('Desarrollado por',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.developerText,
+                  style: AppTextStyle.bodySmall,
                 ),
                 const Expanded(
                   child: Divider(color: AppColors.chatOfflineLight, thickness: 1, indent: 10)
@@ -66,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
                       Image.asset(AppAssets.githubLogo, width: 20),
                       const SizedBox(width: 5),
                       Text('Fabian',
-                          style: AppTextStyle.githubName,
+                          style: AppTextStyle.body,
                       ),
                     ],
                   ),

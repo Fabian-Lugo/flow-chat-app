@@ -49,7 +49,7 @@ class ConnectionStyles extends StatelessWidget {
           const SizedBox(width: 5),
           Text(
             text,
-            style: AppTextStyle.connectionStatus,
+            style: AppTextStyle.statusSmall,
           ),
         ],
       ) 

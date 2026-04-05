@@ -16,7 +16,7 @@ class TextLink extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Text(text, style: AppTextStyle.linkText),
+      child: Text(text, style: AppTextStyle.link),
     );
   }
 }

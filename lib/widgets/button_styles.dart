@@ -22,14 +22,14 @@ class ButtonStyles extends StatelessWidget{
         padding: EdgeInsets.symmetric(vertical: 15),
         width: MediaQuery.of(context).size.width * 0.8,
         decoration: BoxDecoration(
-          color: twoStyle ? AppColors.surfaceLight : AppColors.primaryLight,
+          color: twoStyle ? AppColors.surfaceLight : AppColors.primary,
           borderRadius: BorderRadius.circular(15),
-          border: twoStyle ? Border.all(color: AppColors.primaryLight, width: 1) : null,
+          border: twoStyle ? Border.all(color: AppColors.primary, width: 1) : null,
         ), child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(text,
-              style: twoStyle ? AppTextStyle.buttonTextSecondary : AppTextStyle.buttonTextPrimary,
+              style: twoStyle ? AppTextStyle.buttonSecondary : AppTextStyle.buttonPrimary,
             ),
           ],
         )

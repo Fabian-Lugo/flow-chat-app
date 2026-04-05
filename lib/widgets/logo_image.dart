@@ -8,7 +8,7 @@ class LogoImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [Image.asset(AppAssets.iconApp, width:300)],
+      children: [Image.asset(AppAssets.foreground, width:260)],
     );
   }
 }

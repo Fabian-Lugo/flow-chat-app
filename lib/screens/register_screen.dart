@@ -1,4 +1,4 @@
-import 'package:flow_chat/widgets/checkbox_style.dart';
+import 'package:flow_chat/widgets/checkbox_terms_style.dart';
 import 'package:flow_chat/widgets/logo_image.dart';
 import 'package:flow_chat/widgets/text_link.dart';
 import 'package:flutter/material.dart';
@@ -17,21 +17,30 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController _controllerTextName = TextEditingController();
-  final TextEditingController _controllerTextEmail = TextEditingController();
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
+  bool aceptTerms = false;
   final _key = GlobalKey<FormState>();
 
   void goNext() {
-    if (_key.currentState!.validate()) {
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.inbox, (_) => false);
-    }
+    setState(() {
+      if (_key.currentState!.validate()) {
+        if (aceptTerms == true) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.inbox,
+            (_) => false,
+          );
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
-    _controllerTextName.dispose();
-    _controllerTextEmail.dispose();
+    _controllerName.dispose();
+    _controllerEmail.dispose();
     _controllerPassword.dispose();
     super.dispose();
   }
@@ -52,46 +61,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Form(
                   key: _key,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     child: Column(
                       children: [
-                        LogoImage(),
-                        Text(
-                          'Crear cuenta',
-                          style: AppTextStyle.loginTitle,
-                        ),
+                        const _Header(),
                         const SizedBox(height: 30),
-                        InputStyle(
-                          text: 'Nombre',
-                          controller: _controllerTextName,
-                          type: TextInputType.text,
-                          useIcon: CupertinoIcons.profile_circled,
-                        ),
-                        const SizedBox(height: 20),
-                        InputStyle(
-                          text: 'Correo',
-                          controller: _controllerTextEmail,
-                          type: TextInputType.emailAddress,
-                          useIcon: CupertinoIcons.mail,
-                        ),
-                        const SizedBox(height: 20),
-                        InputStylePassword(
-                          text: 'Contraseña',
-                          controller: _controllerPassword,
+                        _inputFields(
+                          nameController: _controllerName,
+                          emailController: _controllerEmail,
+                          passwordController: _controllerPassword,
                         ),
                         const SizedBox(height: 15),
-                        _registerCheckBox(),
-                        SizedBox(height: size.height * 0.15),
+                        CheckboxTermsStyle(
+                          value: aceptTerms,
+                          onChanged: (bool? newValue) => setState(() {
+                            aceptTerms = newValue!;
+                          }),
+                        ),
+                        SizedBox(height: size.height * 0.067),
                         ButtonStyles(text: 'Crear cuenta', onTap: goNext),
                         const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Ya eres miembro?', style: AppTextStyle.checkboxText),
-                            const SizedBox(width: 3),
-                            TextLink(text: 'Inicia sesión', onTap: () => Navigator.pop(context))
-                          ],
-                        )
+                        const _loginFooter(),
                       ],
                     ),
                   ),
@@ -103,12 +93,79 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+}
 
-  Widget _registerCheckBox() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: [
-        CheckboxStyle(text: 'Acepto los Terminos y Condiciones', terms: true,),
+        LogoImage(),
+        Text('Únete a Flow Chat', style: AppTextStyle.title),
+        const SizedBox(height: 10),
+        Text(
+          'Crea una cuenta gratis en 30 segundos',
+          style: AppTextStyle.subtitle,
+        ),
+      ],
+    );
+  }
+}
+
+class _inputFields extends StatelessWidget {
+  final TextEditingController nameController;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  const _inputFields({
+    required this.nameController,
+    required this.emailController,
+    required this.passwordController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InputStyle(
+          title: 'Nombre',
+          labelText: 'Ingrese nombre completo',
+          controller: nameController,
+          type: TextInputType.text,
+          useIcon: Icons.person_2_outlined,
+        ),
+        const SizedBox(height: 13),
+        InputStyle(
+          title: 'Correo',
+          labelText: 'Ingrese correo',
+          controller: emailController,
+          type: TextInputType.emailAddress,
+          useIcon: Icons.mail_outline_rounded,
+        ),
+        const SizedBox(height: 13),
+        InputStylePassword(
+          title: 'Contraseña',
+          labelText: 'Ingrese contraseña',
+          controller: passwordController,
+        ),
+      ],
+    );
+  }
+}
+
+class _loginFooter extends StatelessWidget {
+  const _loginFooter();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('Ya eres miembro?', style: AppTextStyle.body),
+        const SizedBox(width: 3),
+        TextLink(text: 'Inicia sesión', onTap: () => Navigator.pop(context)),
       ],
     );
   }

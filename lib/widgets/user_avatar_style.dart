@@ -6,7 +6,7 @@ import 'package:flow_chat/widgets/online_status_badge.dart';
 import 'package:flutter/material.dart';
 
 class UserAvatarStyle extends StatelessWidget {
-  final User user;
+  final UserModel user;
   final double radius;
   final bool showBadge;
   final bool useAccentGradient;

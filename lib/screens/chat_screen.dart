@@ -48,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = ModalRoute.of(context)?.settings.arguments as User?;
+    final UserModel? user = ModalRoute.of(context)?.settings.arguments as UserModel?;
     final String name = user?.name ?? widget.userName ?? 'Usuario';
 
     return Scaffold(
@@ -84,7 +84,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 }
 
 class _ChatAppbarContent extends StatefulWidget {
-  final User? user;
+  final UserModel? user;
   final String name;
   const _ChatAppbarContent({required this.user, required this.name});
 

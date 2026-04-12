@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flow_chat/models/user.dart';
 import 'package:flow_chat/theme/app_colors.dart';
 import 'package:flow_chat/theme/app_routes.dart';
@@ -9,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final User? user;
+  final UserModel? user;
   const ProfileScreen({this.user, super.key});
 
   @override
@@ -17,8 +19,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final List<User> users = [
-    User(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
+  final List<UserModel> users = [
+    UserModel(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
   ];
 
   @override
@@ -44,7 +46,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text('Información de perfil', style: AppTextStyle.subtitleIos),
             const SizedBox(height: 30),
             _InfoFields(users: users),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.16),
+            Platform.isIOS ? SizedBox(height: MediaQuery.of(context).size.height * 0.16) :
+            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
             ButtonStyles(
               text: 'Cerrar sesión',
               onTap: () => Navigator.pushNamedAndRemoveUntil(
@@ -70,7 +73,7 @@ class _AppBarTitle extends StatelessWidget {
 }
 
 class _AvatarRow extends StatelessWidget {
-  final List<User> users;
+  final List<UserModel> users;
   const _AvatarRow({required this.users});
 
   @override
@@ -92,7 +95,7 @@ class _AvatarRow extends StatelessWidget {
 }
 
 class _InfoFields extends StatefulWidget {
-  final List<User> users;
+  final List<UserModel> users;
   const _InfoFields({required this.users});
 
   @override

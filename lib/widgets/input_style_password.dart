@@ -82,17 +82,17 @@ class _InputStylePasswordState extends State<InputStylePassword> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: hasError
-                    ? const Icon(Icons.error, color: AppColors.error)
-                    : (widget.controller.text.isNotEmpty
-                          ? GestureDetector(
-                              onTap: _seePassword,
-                              child: Icon(
-                                _obscureText
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined,
-                              ),
-                            )
-                          : null),
+                ? const Icon(Icons.error, color: AppColors.error)
+                : (widget.controller.text.isNotEmpty
+                      ? GestureDetector(
+                          onTap: _seePassword,
+                          child: Icon(
+                            _obscureText
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                          ),
+                        )
+                      : null),
               ),
             ),
           ),

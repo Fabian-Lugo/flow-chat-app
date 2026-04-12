@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flow_chat/utils/message_screen.dart';
 import 'package:flow_chat/widgets/checkbox_terms_style.dart';
 import 'package:flow_chat/widgets/logo_image.dart';
 import 'package:flow_chat/widgets/text_link.dart';
@@ -21,21 +22,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-  bool aceptTerms = false;
   final _key = GlobalKey<FormState>();
+  bool aceptTerms = false;
 
   void goNext() {
-    setState(() {
-      if (_key.currentState!.validate()) {
-        if (aceptTerms == true) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.inbox,
-            (_) => false,
-          );
-        }
-      }
-    });
+    final isFormValid = _key.currentState!.validate();
+
+    if (!isFormValid) {
+      setState(() {});
+      return;
+    }
+
+    if (aceptTerms == false) {
+      _showMessage(
+        text: 'No aceptaste los términos y políticas',
+        isError: true,
+      );
+      return;
+    }
+    
+    _handleSuccess();
+  }
+
+  void _handleSuccess() {
+    _showMessage(text: 'Registro exitoso', isError: false);
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.inbox, (_) => false);
+  }
+
+  void _showMessage({required String text, required bool isError}) {
+    MessageScreen.show(text: text, context: context, isError: isError);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flow_chat/utils/message_screen.dart';
 import 'package:flow_chat/widgets/logo_image.dart';
 import 'package:flow_chat/widgets/text_link.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +23,36 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   void goNext() {
-    setState(() {
-      if (_key.currentState!.validate()) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRoutes.inbox,
-          (_) => false,
-        );
-      }
-    });
+    final isFormValid = _key.currentState!.validate();
+
+    if (!isFormValid) {
+      setState(() {});
+      return;
+    }
+
+    _performLogin();
+  }
+
+  void _performLogin() {
+    bool loginExitoso = true; // Backend Logic
+
+    if (loginExitoso) {
+      _handleSucces();
+    } else {
+      _showMessages(
+        text: 'Correo o contraseña incorrectos', 
+        isError: true
+      );
+    }
+  }
+
+  void _handleSucces() {
+    _showMessages(text: 'Iniciaste sesión', isError: false);
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.inbox, (_) => false);
+  }
+
+  void _showMessages({required String text, required bool isError}) {
+    MessageScreen.show(text: text, context: context, isError: isError);
   }
 
   @override

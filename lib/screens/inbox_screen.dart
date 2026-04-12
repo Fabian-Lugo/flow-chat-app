@@ -18,19 +18,19 @@ class InboxScreen extends StatefulWidget {
 }
 
 class _InboxScreenState extends State<InboxScreen> {
-  final List<User> users = [
-    User(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
-    User(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
-    User(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
-    User(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
-    User(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
-    User(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
-    User(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
-    User(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
-    User(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
-    User(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
-    User(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
-    User(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
+  final List<UserModel> users = [
+    UserModel(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
+    UserModel(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
+    UserModel(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
+    UserModel(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
+    UserModel(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
+    UserModel(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
+    UserModel(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
+    UserModel(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
+    UserModel(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
+    UserModel(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
+    UserModel(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
+    UserModel(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
   ];
 
   final List<Color> colors = [
@@ -42,7 +42,7 @@ class _InboxScreenState extends State<InboxScreen> {
     initialRefresh: false,
   );
 
-  void goChat(User user) {
+  void goChat(UserModel user) {
     Navigator.pushNamed(context, AppRoutes.chat, arguments: user);
   }
 
@@ -113,8 +113,8 @@ class _InboxAppBarContent extends StatelessWidget {
 class _MainScrollBody extends StatelessWidget {
   final RefreshController refreshController;
   final VoidCallback onRefresh;
-  final List<User> users;
-  final List<User> onlineUsers;
+  final List<UserModel> users;
+  final List<UserModel> onlineUsers;
   final Function onTap;
 
   const _MainScrollBody({
@@ -169,7 +169,7 @@ class _MainScrollBody extends StatelessWidget {
 }
 
 class _ChatUserTile extends StatelessWidget {
-  final User user;
+  final UserModel user;
   final Function onTap;
 
   const _ChatUserTile({required this.user, required this.onTap});
@@ -194,7 +194,7 @@ class _ChatUserTile extends StatelessWidget {
 }
 
 class _ActiveFriendsSlider extends StatelessWidget {
-  final List<User> onlineUsers;
+  final List<UserModel> onlineUsers;
   final Function onTap;
 
   const _ActiveFriendsSlider({required this.onlineUsers, required this.onTap});

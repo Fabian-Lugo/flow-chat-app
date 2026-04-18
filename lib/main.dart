@@ -1,5 +1,5 @@
+import 'package:flow_chat/router/router.dart';
 import 'package:flutter/material.dart';
-import 'package:flow_chat/theme/app_routes.dart';
 
 void main() => runApp(App());
 
@@ -8,11 +8,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Flow-chat',
-      initialRoute: AppRoutes.welcome,
-      routes: appRoutes,
     );
   }
 }

@@ -1,15 +1,16 @@
 import 'dart:io';
 
+import 'package:flow_chat/router/app_routes.dart';
 import 'package:flow_chat/utils/message_screen.dart';
-import 'package:flow_chat/widgets/checkbox_terms_style.dart';
-import 'package:flow_chat/widgets/logo_image.dart';
-import 'package:flow_chat/widgets/text_link.dart';
+import 'package:flow_chat/features/auth/widgets/checkbox_terms_style.dart';
+import 'package:flow_chat/features/auth/widgets/logo_image.dart';
+import 'package:flow_chat/features/auth/widgets/text_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
-import 'package:flow_chat/theme/app_routes.dart';
 import 'package:flow_chat/widgets/input_style.dart';
 import 'package:flow_chat/widgets/input_style_password.dart';
 import 'package:flow_chat/widgets/button_styles.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -40,13 +41,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       return;
     }
-    
+
     _handleSuccess();
   }
 
   void _handleSuccess() {
     _showMessage(text: 'Registro exitoso', isError: false);
-    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.inbox, (_) => false);
+    context.go(AppRoutes.inbox);
   }
 
   void _showMessage({required String text, required bool isError}) {
@@ -197,7 +198,7 @@ class _loginFooter extends StatelessWidget {
       children: [
         Text('Ya eres miembro?', style: AppTextStyle.body),
         const SizedBox(width: 3),
-        TextLink(text: 'Inicia sesión', onTap: () => Navigator.pop(context)),
+        TextLink(text: 'Inicia sesión', onTap: () => context.pop()),
       ],
     );
   }

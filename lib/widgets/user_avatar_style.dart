@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flow_chat/models/user.dart';
 import 'package:flow_chat/theme/app_colors.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
-import 'package:flow_chat/widgets/online_status_badge.dart';
+import 'package:flow_chat/features/chat/widgets/online_status_badge.dart';
 import 'package:flutter/material.dart';
 
 class UserAvatarStyle extends StatelessWidget {

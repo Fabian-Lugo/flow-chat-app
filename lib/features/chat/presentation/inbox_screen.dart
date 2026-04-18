@@ -1,14 +1,23 @@
 import 'package:flow_chat/models/user.dart';
+import 'package:flow_chat/router/app_routes.dart';
 import 'package:flow_chat/theme/app_colors.dart';
-import 'package:flow_chat/theme/app_routes.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
-import 'package:flow_chat/widgets/connection_styles.dart';
-import 'package:flow_chat/widgets/gradient_text.dart';
-import 'package:flow_chat/widgets/online_status_badge.dart';
+import 'package:flow_chat/features/chat/widgets/connection_styles.dart';
+import 'package:flow_chat/features/chat/widgets/gradient_text.dart';
+import 'package:flow_chat/features/chat/widgets/online_status_badge.dart';
 import 'package:flow_chat/widgets/user_avatar_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:go_router/go_router.dart';
+
+/// If [name] is longer than 8 characters, returns the first 8 plus "...".
+/// Otherwise returns the full [name] (nothing is cut).
+String _truncateNameForSlider(String name) {
+  const int maxChars = 10;
+  if (name.length <= maxChars) return name;
+  return '${name.substring(0, maxChars)}...';
+}
 
 class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
@@ -20,17 +29,20 @@ class InboxScreen extends StatefulWidget {
 class _InboxScreenState extends State<InboxScreen> {
   final List<UserModel> users = [
     UserModel(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
-    UserModel(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
-    UserModel(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
+    UserModel(
+      uid: '2',
+      name: 'Alonso',
+      email: 'alonso@test.com',
+      online: false,
+    ),
+    UserModel(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: false),
     UserModel(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
-    UserModel(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
-    UserModel(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
-    UserModel(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
-    UserModel(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
-    UserModel(uid: '1', name: 'Fabian', email: 'fabian@flow.com', online: true),
-    UserModel(uid: '2', name: 'Alonso', email: 'alonso@test.com', online: false),
-    UserModel(uid: '3', name: 'Lugo', email: 'lugo@dev.com', online: true),
-    UserModel(uid: '4', name: 'Alejandra', email: 'ale@flow.com', online: true),
+    UserModel(
+      uid: '1',
+      name: 'AlessandraAlverioDoSantos',
+      email: 'alesandra@flow.com',
+      online: true,
+    ),
   ];
 
   final List<Color> colors = [
@@ -43,7 +55,7 @@ class _InboxScreenState extends State<InboxScreen> {
   );
 
   void goChat(UserModel user) {
-    Navigator.pushNamed(context, AppRoutes.chat, arguments: user);
+    context.push(AppRoutes.nestedChat, extra: user);
   }
 
   void _onRefreshUsers() async {
@@ -101,7 +113,7 @@ class _InboxAppBarContent extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () => Navigator.pushNamed(context, AppRoutes.profile),
+            onPressed: () => context.push(AppRoutes.nestedProfile),
             icon: Icon(CupertinoIcons.person, size: 30),
           ),
         ],
@@ -202,7 +214,7 @@ class _ActiveFriendsSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 115,
+      height: 120,
       width: double.infinity,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -213,6 +225,7 @@ class _ActiveFriendsSlider extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 GestureDetector(
                   onTap: () => onTap(user),
@@ -228,10 +241,14 @@ class _ActiveFriendsSlider extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 SizedBox(
-                  width: 70,
+                  width: 80,
+                  height: 22,
                   child: Text(
-                    user.name,
+                    _truncateNameForSlider(user.name),
                     textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
                     style: AppTextStyle.labelBold,
                   ),
                 ),

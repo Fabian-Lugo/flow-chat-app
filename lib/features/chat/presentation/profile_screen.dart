@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flow_chat/models/user.dart';
 import 'package:flow_chat/theme/app_colors.dart';
-import 'package:flow_chat/theme/app_routes.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
+import 'package:flow_chat/router/app_routes.dart';
 import 'package:flow_chat/widgets/button_styles.dart';
 import 'package:flow_chat/widgets/input_style.dart';
 import 'package:flow_chat/widgets/user_avatar_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
   final UserModel? user;
@@ -46,15 +47,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text('Información de perfil', style: AppTextStyle.subtitleIos),
             const SizedBox(height: 30),
             _InfoFields(users: users),
-            Platform.isIOS ? SizedBox(height: MediaQuery.of(context).size.height * 0.16) :
-            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+            Platform.isIOS
+                ? SizedBox(height: MediaQuery.of(context).size.height * 0.16)
+                : SizedBox(height: MediaQuery.of(context).size.height * 0.25),
             ButtonStyles(
               text: 'Cerrar sesión',
-              onTap: () => Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRoutes.login,
-                (_) => false,
-              ),
+              onTap: () => context.go(AppRoutes.login),
             ),
           ],
         ),

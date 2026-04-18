@@ -1,14 +1,15 @@
 import 'dart:io';
 
+import 'package:flow_chat/router/app_routes.dart';
 import 'package:flow_chat/utils/message_screen.dart';
-import 'package:flow_chat/widgets/logo_image.dart';
-import 'package:flow_chat/widgets/text_link.dart';
+import 'package:flow_chat/features/auth/widgets/logo_image.dart';
+import 'package:flow_chat/features/auth/widgets/text_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
-import 'package:flow_chat/theme/app_routes.dart';
 import 'package:flow_chat/widgets/input_style.dart';
 import 'package:flow_chat/widgets/input_style_password.dart';
 import 'package:flow_chat/widgets/button_styles.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -39,16 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if (loginExitoso) {
       _handleSucces();
     } else {
-      _showMessages(
-        text: 'Correo o contraseña incorrectos', 
-        isError: true
-      );
+      _showMessages(text: 'Correo o contraseña incorrectos', isError: true);
     }
   }
 
   void _handleSucces() {
     _showMessages(text: 'Iniciaste sesión', isError: false);
-    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.inbox, (_) => false);
+    context.go(AppRoutes.inbox);
   }
 
   void _showMessages({required String text, required bool isError}) {
@@ -186,7 +184,7 @@ class _RegisterFooter extends StatelessWidget {
             const SizedBox(width: 3),
             TextLink(
               text: 'Unete ahora',
-              onTap: () => Navigator.pushNamed(context, AppRoutes.register),
+              onTap: () => context.push(AppRoutes.register),
             ),
           ],
         ),

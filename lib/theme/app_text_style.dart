@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyle {
-  // --- Títulos y Encabezados ---
   static TextStyle title = GoogleFonts.inter(
     fontSize: 27,
     fontWeight: FontWeight.w700,
@@ -112,7 +111,18 @@ class AppTextStyle {
     color: AppColors.surfaceLight,
   );
 
-  // --- Chat ---
+  static TextStyle chatAppBarContactName = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: AppColors.text,
+  );
+
+  static TextStyle chatAppBarContactNameCompact = GoogleFonts.inter(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: AppColors.text,
+  );
+
   static TextStyle chatMessage = GoogleFonts.inter(
     fontSize: 18,
     fontWeight: FontWeight.w600,

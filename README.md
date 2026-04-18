@@ -66,7 +66,14 @@ Aquí puedes visualizar el flujo de la aplicación. Para añadir tus propias cap
 - **🎨 Design System**: Estilos centralizados en `AppColors` y `AppTextStyle`.
 - **🔐 Auth Engine**: Sistema seguro de login y registro.
 - **☁️ Sync Cloud**: Todos tus chats siempre actualizados con MongoDB.
-- **🛠️ Cleaner Architecture**: Código modular y extensible para facilitar el escalado.
+- **🛠️ Arquitectura por features**: Pantallas bajo `lib/features/<auth|chat>/presentation/`, widgets por dominio y componentes compartidos en `lib/widgets/`.
+- **🧭 Navegación**: `go_router` con rutas centralizadas en `lib/router/`.
+
+---
+
+## 📐 Estructura del código
+
+La app sigue una **organización por funcionalidad** (auth, chat) más capas transversales (`theme`, `models`, `utils`, `router`). El detalle de carpetas, criterios para colocar widgets y el roadmap técnico están en **[ARCHITECTURE.md](ARCHITECTURE.md)**.
 
 ---
 

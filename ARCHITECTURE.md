@@ -1,51 +1,71 @@
-# Arquitectura del Proyecto y Contexto 🏗️📱
+# Arquitectura del proyecto
 
-## Resumen del Proyecto 🌟
-**Flow-chat** es una aplicación de mensajería en tiempo real de alto rendimiento construida con Flutter. El proyecto se enfoca en ofrecer una experiencia de usuario premium, aprovechando un sistema de diseño centralizado y una estructura de carpetas limpia y escalable. Actualmente, toda la capa de interfaz de usuario (UI) está finalizada, incluyendo flujos de autenticación, gestión de contactos y la interfaz principal de chat. 🚀
+## Resumen
 
----
-
-## Stack Tecnológico 🛠️
-- **Frontend**: Flutter & Dart 💙
-- **Gestión de Estado**: (Punto a decidir/implementar durante la integración con el backend) 🧠
-- **Estilos**: Enfoque tipo CSS centralizado con un Sistema de Diseño propio (`AppColors`, `AppTextStyle`). 🎨
-- **Iconos**: Material Icons & Cupertino Icons. 💎
-- **Fuentes**: Google Fonts (Inter). ✍️
+**Flow-chat** es una aplicación de mensajería en tiempo real construida con Flutter. El código se organiza por **funcionalidad (features)** para escalar la UI y, más adelante, la capa de datos sin mezclar responsabilidades. La interfaz actual cubre autenticación (bienvenida, login, registro), bandeja de entrada, chat y perfil, con un **sistema de diseño** centralizado (`AppColors`, `AppTextStyle`).
 
 ---
 
-## Estructura de Directorios 📂
-El proyecto sigue una estructura modular para garantizar la mantenibilidad y el orden:
+## Stack tecnológico
+
+| Área | Tecnología |
+|------|------------|
+| Framework | Flutter / Dart |
+| Navegación | [go_router](https://pub.dev/packages/go_router) (`MaterialApp.router`, configuración en `lib/router/`) |
+| Estilos | Tokens en `theme/` (colores, tipografía) |
+| Fuentes | Google Fonts (Inter) |
+| Iconos | Material + Cupertino |
+
+La **gestión de estado global** y la **integración con backend** están pendientes de definir en la fase de API/WebSockets.
+
+---
+
+## Estructura de `lib/`
+
+El árbol refleja la organización por feature: cada módulo agrupa lo que es específico de ese dominio; lo compartido permanece en la raíz de `lib/`.
 
 ```text
 lib/
-├── models/         # 🧩 Entidades de datos (ej. User, Message)
-├── screens/        # 📱 Pantallas completas (Login, Register, Inbox, Chat)
-├── services/       # ⚙️ Lógica para comunicación con el backend y APIs
-├── theme/          # 🎨 Sistema de diseño (Colores, Estilos de texto, Rutas)
-├── utils/          # 🛠️ Clases de utilidad y adornos para UI (Bordes, Inputs)
-├── widgets/        # 🧱 Componentes de UI reutilizables (Avatares, Badges, Botones)
-└── main.dart       # 🚀 Punto de entrada de la app y configuración global
+├── main.dart                 # Punto de entrada; usa MaterialApp.router
+├── router/                   # Rutas y GoRouter (app_routes.dart, router.dart)
+├── features/
+│   ├── auth/
+│   │   ├── presentation/   # Pantallas: welcome, login, register
+│   │   ├── widgets/        # Widgets solo de auth (logo, links, checkbox, etc.)
+│   │   └── services/       # Futura lógica de API/auth (placeholder)
+│   └── chat/
+│       ├── presentation/   # Pantallas: inbox, chat, profile
+│       ├── widgets/        # Widgets de chat (mensajes, badges, estilos de lista)
+│       └── services/       # Futura lógica de mensajería (placeholder)
+├── models/                   # Entidades compartidas (p. ej. User)
+├── theme/                    # Design system (colores, textos; sin rutas)
+├── utils/                    # Utilidades de UI y helpers
+└── widgets/                  # Componentes reutilizables entre features (inputs, botones, avatar genérico)
 ```
 
+**Criterios rápidos**
+
+- **¿Va en `features/<x>/widgets/`?** Si solo lo usa ese feature (p. ej. términos en registro → auth).
+- **¿Va en `lib/widgets/`?** Si varios features lo reutilizan (inputs, botones, avatar compartido).
+- **Rutas y nombres de path** viven en `router/app_routes.dart`; la tabla de rutas en `router/router.dart`.
+
 ---
 
-## Sistema de Diseño (Design System) ❤️
-- **Tokens Centralizados**: Todos los elementos de la interfaz hacen referencia a `AppColors` y `AppTextStyle` para asegurar consistencia visual total. ✨
-- **Diseño Adaptable (Responsive)**: Diseñado para funcionar perfectamente en diferentes tamaños de pantalla. 📱💻
-- **Adaptación por Plataformas**: Utiliza verificaciones de `Platform.isIOS` para ofrecer una experiencia nativa tanto en Android como en iOS (ej. `CupertinoButton` vs `IconButton`). 🍏🤖
+## Sistema de diseño
+
+- Los estilos visuales deben basarse en `AppColors` y `AppTextStyle`.
+- Donde aplique, la UI adapta detalles por plataforma (`Platform.isIOS`, etc.).
 
 ---
 
-## Contexto del Proyecto y Progreso Actual 📈
-1. **Fase 1: Cimientos (Completado) ✅**
-   - Configuración inicial del proyecto y enrutamiento (Routing).
-   - Estructura básica de carpetas.
-2. **Fase 2: UI/UX & Sistema de Diseño (Completado) ✅**
-   - Implementación de todas las pantallas (Welcome, Login, Register, Inbox, Chat).
-   - Creación de los sistemas de diseño en `AppColors` y `AppTextStyle`.
-   - Refactorización de todos los componentes para usar tokens centralizados.
-3. **Fase 3: Integración con el Backend (Siguiente Paso) ⏳**
-   - Conexión con el backend en Node.js / MongoDB.
-   - Actualizaciones en tiempo real mediante WebSockets (Socket.io). 💬
-   - Implementación del manejo de estado global (State Management).
+## Fases del proyecto
+
+1. **Cimientos** — Proyecto inicial, estructura de carpetas y navegación declarativa con `go_router`.
+2. **UI y design system** — Pantallas principales y tokens de tema; widgets repartidos por feature o compartidos.
+3. **Backend (siguiente)** — API, persistencia (p. ej. MongoDB), tiempo real (p. ej. WebSockets) y estado global según el equipo elija.
+
+---
+
+## Documentación relacionada
+
+- Visión de producto y capturas: [`README.md`](README.md).

@@ -4,14 +4,15 @@ import 'package:flow_chat/models/user.dart';
 import 'package:flow_chat/theme/app_colors.dart';
 import 'package:flow_chat/theme/app_text_style.dart';
 import 'package:flow_chat/utils/input_styles_border.dart';
-import 'package:flow_chat/widgets/chat_message.dart';
+import 'package:flow_chat/features/chat/widgets/chat_message.dart';
 import 'package:flow_chat/widgets/user_avatar_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatScreen extends StatefulWidget {
-  final String? userName;
-  const ChatScreen({this.userName, super.key});
+  final UserModel? user;
+  const ChatScreen({this.user, super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -48,16 +49,15 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel? user = ModalRoute.of(context)?.settings.arguments as UserModel?;
-    final String name = user?.name ?? widget.userName ?? 'Usuario';
+    final String name = widget.user?.name ?? 'Usuario';
 
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,
-        title: _ChatAppbarContent(user: user, name: name),
+        title: _ChatAppbarContent(user: widget.user, name: name),
         elevation: 1,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
           icon: Icon(CupertinoIcons.chevron_left),
         ),
       ),
@@ -93,8 +93,16 @@ class _ChatAppbarContent extends StatefulWidget {
 }
 
 class _ChatAppbarContentState extends State<_ChatAppbarContent> {
+  static const int _maxNameLengthForNormalTitleSize = 15;
+
   @override
   Widget build(BuildContext context) {
+    final bool useCompactTitle =
+        widget.name.length > _maxNameLengthForNormalTitleSize;
+    final TextStyle titleStyle = useCompactTitle
+        ? AppTextStyle.chatAppBarContactNameCompact
+        : AppTextStyle.chatAppBarContactName;
+
     return Row(
       children: [
         if (widget.user != null)
@@ -107,7 +115,14 @@ class _ChatAppbarContentState extends State<_ChatAppbarContent> {
             profileInitials: false,
           ),
         const SizedBox(width: 12),
-        Text(widget.name, style: AppTextStyle.headingSmall),
+        Expanded(
+          child: Text(
+            widget.name,
+            style: titleStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
